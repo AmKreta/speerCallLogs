@@ -10,6 +10,14 @@ export function getDateCreated(timeStr) {
     return date.toLocaleDateString();
 }
 
+export function sortObjectByKeys(obj) {
+    const keys = Object.keys(obj);
+    keys.sort((a, b) => b > a ? -1 : 1);
+    let newObj = {};
+    keys.forEach(key => newObj[key] = obj[key]);
+    return newObj;
+}
+
 export const groupLogsByDate = (logs) => {
     let logGroup = {};
     for (let log of logs) {
@@ -17,5 +25,5 @@ export const groupLogsByDate = (logs) => {
         if (logGroup[dateCreated]) logGroup[dateCreated].push(log);
         else logGroup[dateCreated] = [log];
     }
-    return logGroup;
+    return sortObjectByKeys(logGroup);
 }
