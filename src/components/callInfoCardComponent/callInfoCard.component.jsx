@@ -4,10 +4,9 @@ import CallIcon from "@mui/icons-material/Call";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import { CALL_TYPE_INFO } from "../../utils/callTypeInfo.jsx";
+import { getTimeAMPMFormat } from "../../utils/utils.js";
 
 const CallInfoCard = ({ logInfo = {}, onClick, actionButton, index, expanded }) => {
-  let createdAt = new Date(logInfo.created_at);
-  let createdAtTime = createdAt.toLocaleTimeString();
   return (
     <CardContainer data-id={logInfo.id} data-index={index} onClick={onClick}>
       <CompactInfoContainer>
@@ -22,7 +21,7 @@ const CallInfoCard = ({ logInfo = {}, onClick, actionButton, index, expanded }) 
               className="message"
             >
               {CALL_TYPE_INFO[logInfo.call_type][logInfo.direction].title}{" "}
-              {createdAtTime}
+              {getTimeAMPMFormat(new Date(logInfo.created_at))}
             </Typography>
           </span>
         </Info>
