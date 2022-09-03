@@ -17,6 +17,7 @@ const Archive = () => {
 
     const toggleExpandedView = (e) => {
         const clickedId = e.currentTarget.dataset["id"];
+        setActiveLog(prevState => prevState === clickedId ? null : clickedId);
     };
 
     const unArchive = async (e) => {
@@ -49,6 +50,7 @@ const Archive = () => {
                             : 'No logs to show in Archive'
                     }
                     loading={isLoading}
+                    activeId={activeLog}
                 />
             </div>
             <Button fullWidth onClick={unArchiveAll}>Restore All</Button>

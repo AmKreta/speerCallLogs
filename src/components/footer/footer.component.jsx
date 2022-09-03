@@ -18,8 +18,6 @@ const Footer = () => {
 
   const location = useLocation();
 
-  console.log(location.pathname)
-
   return (
     <FooterContainer>
       <IconButton onClick={goToCallLogs}>

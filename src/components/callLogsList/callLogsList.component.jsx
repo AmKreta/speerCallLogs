@@ -4,7 +4,7 @@ import CallInfoCard from "../callInfoCardComponent/callInfoCard.component.jsx";
 import styled from '@mui/material/styles/styled';
 import Loader from "../loader/loader.component.jsx";
 
-const CallLogsList = function ({ logs, clickHandler, actionButton, emptyMessage }) {
+const CallLogsList = function ({ logs, clickHandler, actionButton, emptyMessage, activeId }) {
     const dates = Object.keys(logs);
 
     if (!dates.length)
@@ -20,9 +20,10 @@ const CallLogsList = function ({ logs, clickHandler, actionButton, emptyMessage 
                     logs[date].map((log, index) => <CallInfoCard
                         logInfo={log}
                         onClick={clickHandler}
-                        key={date + index}
+                        key={log.id}
                         index={index}
                         actionButton={actionButton}
+                        expanded={activeId === log.id.toString()}
                     />)
                 }
             </CallLogsOnDateContainer>
@@ -57,11 +58,11 @@ const DateContainer = styled('div')(({ theme }) => ({
     }
 }));
 
-const Message=styled(Typography)(()=>({
-    position:'absolute',
-    top:'50%',
-    left:'50%',
-    transform:'translate(-50%, -50%)'
+const Message = styled(Typography)(() => ({
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)'
 }))
 
 export default CallLogsList;

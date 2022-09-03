@@ -15,6 +15,7 @@ const Activity = () => {
 
   const toggleExpendedView = (e) => {
     const clickedId = e.currentTarget.dataset["id"];
+    setActiveLog(prevState => prevState === clickedId ? null : clickedId);
   };
 
   const addToArchive = async (e) => {
@@ -41,6 +42,7 @@ const Activity = () => {
             : 'No logs to show'
         }
         loader={isLoading}
+        activeId={activeLog}
       />
     </div>
   );

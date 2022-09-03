@@ -5,7 +5,7 @@ import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import { CALL_TYPE_INFO } from "../../utils/callTypeInfo.jsx";
 
-const CallInfoCard = ({ logInfo = {}, onClick, actionButton, index }) => {
+const CallInfoCard = ({ logInfo = {}, onClick, actionButton, index, expanded }) => {
   let createdAt = new Date(logInfo.created_at);
   let createdAtTime = createdAt.toLocaleTimeString();
   return (
@@ -36,7 +36,21 @@ const CallInfoCard = ({ logInfo = {}, onClick, actionButton, index }) => {
           <CallIcon />
         )}
       </CompactInfoContainer>
-      <MoreInfoContainer></MoreInfoContainer>
+      <MoreInfoContainer expanded={expanded}>
+        {
+          expanded ? <React.Fragment>
+            <span>
+              <Typography variant="subtitle" color='textSecondary'>duration:-</Typography>
+              <Typography variant="subtitle"> {logInfo.duration}s</Typography>
+            </span>
+            <span>
+              <Typography variant="subtitle" color='textSecondary'>via:-</Typography>
+              <Typography variant="subtitle"> {logInfo.via}</Typography>
+            </span>
+          </React.Fragment>
+            : null
+        }
+      </MoreInfoContainer>
     </CardContainer>
   );
 };
@@ -46,6 +60,10 @@ const CardContainer = styled("section")(({ theme }) => ({
   margin: "8px 0",
   padding: "8px",
   borderRadius: "8px",
+  "&:hover": {
+    cursor: "pointer",
+    boxShadow: "0 0 3px #ccc",
+  },
 }));
 
 const Info = styled("div")(({ theme }) => ({
@@ -54,21 +72,32 @@ const Info = styled("div")(({ theme }) => ({
   "&>span.messageToDisplay": {
     display: "flex",
     alignItems: "center",
-    "&>.MuiSvgIcon-root":{
-      height:'15px',
-      width:'15px',
-      marginRight:theme.spacing(1)
+    "&>.MuiSvgIcon-root": {
+      height: '15px',
+      width: '15px',
+      marginRight: theme.spacing(1)
     },
     "&>.message": {
       flexGrow: 1,
-      overflow:'hidden',
-      textOverflow:'ellipsis'
+      overflow: 'hidden',
+      textOverflow: 'ellipsis'
     },
   },
 }));
 
-const MoreInfoContainer = styled("div")(({ theme }) => ({
+const MoreInfoContainer = styled("div")(({ expanded, theme }) => ({
   width: "100%",
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-evenly',
+  margin: '0 4px',
+  marginTop: expanded ? theme.spacing(1.7) : null,
+  paddingTop: expanded ? theme.spacing(1.2) : null,
+  borderTop: expanded ? '1px solid #ccc' : null,
+  height: expanded ? 'auto' : 0,
+  overflow: 'hidden',
+  transition: '.25s',
+  '&>span': { opacity: .7 }
 }));
 
 const CompactInfoContainer = styled("div")(({ theme }) => ({
@@ -76,10 +105,6 @@ const CompactInfoContainer = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   transition: ".25s",
-  "&:hover": {
-    cursor: "pointer",
-    boxShadow: "0 0 3px #ccc",
-  },
 }));
 
 export default CallInfoCard;
